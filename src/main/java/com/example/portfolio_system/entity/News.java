@@ -1,4 +1,4 @@
-package com.example.portfolio_system.Entity;
+package com.example.portfolio_system.entity;
 
 import java.time.LocalDate;
 
