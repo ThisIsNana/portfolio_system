@@ -1,8 +1,8 @@
 
-#�إ߸�Ʈw
+#新增資料庫
 CREATE SCHEMA IF NOT EXISTS `portfolio_system` ;
 
-#�إ�[�̷s����]����
+#新增表格+欄位
 CREATE TABLE IF NOT EXISTS `portfolio_system`.`news` (
   `news_id` INT NOT NULL AUTO_INCREMENT,
   `news_title` VARCHAR(200) NOT NULL,
