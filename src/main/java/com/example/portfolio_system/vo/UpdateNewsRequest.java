@@ -60,7 +60,6 @@ public class UpdateNewsRequest {
 	public void setNewsCategory(String newsCategory) {
 		this.newsCategory = newsCategory;
 	}
-	
-	
+
 
 }

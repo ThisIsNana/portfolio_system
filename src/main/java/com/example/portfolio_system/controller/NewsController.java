@@ -24,7 +24,8 @@ public class NewsController {
 //	 ニュース追加
 	@PostMapping(value = "add_news")
 	public NewsResponse addNews(@RequestBody AddNewsRequest request) {
-		return newsService.addNews(request.getNews());
+		return newsService.addNews(request.getNewsTitle(),request.getNewsCategory(), 
+				request.getNewsCreateDate(), request.getNewsUpdateDate(),request.getNewsDescription());
 	}
 	
 
@@ -60,8 +61,13 @@ public class NewsController {
 //	削除(變更顯示狀態=false)
 	@PostMapping(value = "inactive_news")
 	public NewsResponse inactiveNews(@RequestBody InactiveNewsRequest request) {
-		return null;
+		return newsService.inactiveNews(request.getNewsId(), false);
 		
 	}
 	
+//	更新閲覧数
+	@PostMapping(value = "update_reading_count")
+	public NewsResponse updateReadingCount(@RequestBody UpdateNewsRequest request) {
+		return newsService.updateReadingCount(request.getNewsId());
+	}
 }

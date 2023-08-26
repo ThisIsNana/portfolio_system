@@ -10,7 +10,9 @@ public interface NewsService {
 	
 	
 //	新規
-	public NewsResponse addNews(News news);
+	public NewsResponse addNews(String newsTitle, String newsCategory, 
+			LocalDate newsCreateDate, LocalDate newsUpdateDate, 
+			String newsDescription);
 
 //	全部表示
 	public NewsResponse showAllNews();
@@ -24,7 +26,12 @@ public interface NewsService {
 //	更新
 	public NewsResponse updateNews(int newsId, String title, String category, String decription, LocalDate updateDate);
 
-//	刪除
+//	削除
 	public NewsResponse inactiveNews(int newsId, boolean isActive);
+	
+//	更新閲覧数
+	public NewsResponse updateReadingCount(int newsId);
+	
+	
 	
 }

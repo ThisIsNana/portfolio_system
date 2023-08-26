@@ -24,16 +24,13 @@ public class NewsServiceImpl implements NewsService {
 
 //	新增
 	@Override
-	public NewsResponse addNews(News news) {
+	public NewsResponse addNews(String newsTitle, String newsCategory, 
+			LocalDate newsCreateDate, LocalDate newsUpdateDate, 
+			String newsDescription){
 
-		if (news == null) {
 
-			System.out.println("news is null");
-			return new NewsResponse(RtnCode.CANNOT_EMPTY.getMessage());
-		}
-
-		if (!StringUtils.hasText(news.getNewsTitle()) || !StringUtils.hasText(news.getNewsDescription())
-				|| !StringUtils.hasText(news.getNewsCategory())) {
+		if (!StringUtils.hasText(newsTitle) || !StringUtils.hasText(newsDescription)
+				|| !StringUtils.hasText(newsCategory)) {
 
 			System.out.println("title/description/category is empty");
 			return new NewsResponse(RtnCode.CANNOT_EMPTY.getMessage());
@@ -41,23 +38,20 @@ public class NewsServiceImpl implements NewsService {
 		}
 
 //		日期バリデーション
-		if (news.getNewsUpdateDate().isBefore(news.getNewsCreateDate())) {
+		if (newsUpdateDate.isBefore(newsCreateDate)) {
 
 			System.out.println("date error");
 			return new NewsResponse(RtnCode.NEWS_DATE_ERROR.getMessage());
 
 		}
 
-//		瀏覽次數歸零
-		if (news.getNewsReadingCount() != 0) {
-
-			news.setNewsReadingCount(0);
-		}
-
-//		設定為可讀狀態
-		if (!news.isNewsIsActive()) {
-			news.setNewsIsActive(true);
-		}
+		News news = new News();
+		news.setNewsTitle(newsTitle);
+		news.setNewsCategory(newsCategory);
+		news.setNewsCreateDate(newsCreateDate);
+		news.setNewsUpdateDate(newsUpdateDate);
+		news.setNewsDescription(newsDescription);	
+		news.setNewsIsActive(true);
 
 		newsDao.save(news);
 		return new NewsResponse(news, RtnCode.CREATE_NEWS_SUCCESS.getMessage());
@@ -130,7 +124,7 @@ public class NewsServiceImpl implements NewsService {
 			LocalDate updateDate) {
 
 //		防呆
-		if(newsId < 0) {
+		if(newsId <= 0) {
 			return new NewsResponse(RtnCode.NOT_FOUND.getMessage());
 		}
 		
@@ -142,9 +136,18 @@ public class NewsServiceImpl implements NewsService {
 		
 		
 //		分類不超過兩個
-		if(category.split(",").length > 2) {
+
+		String[] cate = category.split(",");
+		if(cate.length > 2) {
 			return new NewsResponse(RtnCode.CATEGORY_ERROR.getMessage());
 		}
+
+        for (int i = 0; i < cate.length; i++) {
+        	cate[i] = cate[i].trim();
+        }
+        
+		String newCate = String.join(",", cate);
+		
 
 		
 //		進資料庫搜尋
@@ -155,10 +158,10 @@ public class NewsServiceImpl implements NewsService {
 		
 		News updateNews = result.get();
 		
-		updateNews.setNewsTitle(title);
+		updateNews.setNewsTitle(title.trim());
 		updateNews.setNewsDescription(decription);
 		updateNews.setNewsUpdateDate(updateDate);
-		updateNews.setNewsCategory(category);
+		updateNews.setNewsCategory(newCate);
 		
 		newsDao.save(updateNews);
 		return new NewsResponse(updateNews, RtnCode.UPDATE_NEWS_SUCCESS.getMessage());
@@ -171,23 +174,44 @@ public class NewsServiceImpl implements NewsService {
 	public NewsResponse inactiveNews(int newsId, boolean isActive) {
 
 //		防呆
-		if(newsId < 0) {
+		if(newsId <= 0) {
 			return new NewsResponse(RtnCode.NOT_FOUND.getMessage());
 		}
 		
 //		進資料庫搜尋
-		Optional<News> result = newsDao.findById(newsId);
-		if(!result.isPresent()) {
+		Optional<News> newsOp = newsDao.findById(newsId);
+		if(!newsOp.isPresent()) {
 			return new NewsResponse(RtnCode.NOT_FOUND.getMessage());
 		}
-		News inactiveNews = result.get();
+		News inactiveNews = newsOp.get();
 		
 //		變更狀態，回存
 		inactiveNews.setNewsIsActive(isActive);
 		newsDao.save(inactiveNews);
 		return new NewsResponse(inactiveNews, RtnCode.INACTIVE_NEWS_SUCCESS.getMessage());
 	}
+
 	
+	
+	
+//	更新閲覧数
+	@Override
+	public NewsResponse updateReadingCount(int newsId) {
+		
+		if(newsId <= 0) {
+			return new NewsResponse(RtnCode.CANNOT_EMPTY.getMessage());
+		}
+		
+		Optional<News> newsOp = newsDao.findById(newsId);
+		if(!newsOp.isPresent()) {
+			return new NewsResponse(RtnCode.NOT_FOUND.getMessage());
+		}
+		News news = newsOp.get();
+		news.setNewsReadingCount(news.getNewsReadingCount() + 1);
+
+		newsDao.save(news);
+		return new NewsResponse(RtnCode.UPDATE_NEWS_SUCCESS.getMessage());
+	}
 	
 	
 }
