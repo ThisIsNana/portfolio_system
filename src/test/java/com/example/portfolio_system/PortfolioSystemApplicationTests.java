@@ -9,14 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.portfolio_system.entity.News;
+import com.example.portfolio_system.entity.User;
 import com.example.portfolio_system.service.ifs.NewsService;
-import com.example.portfolio_system.vo.NewsResponse;
+import com.example.portfolio_system.service.ifs.UserService;
 
 @SpringBootTest
 class PortfolioSystemApplicationTests {
 	
 	@Autowired
 	private NewsService newsService;
+	
+	@Autowired
+	private UserService userService;
+	
 	
 //	新規
 	@Test
@@ -68,5 +73,20 @@ class PortfolioSystemApplicationTests {
 		newsList = newsService.searchNews("", "",startDate , endDate).getNewsList();
 		System.out.println(newsList.size());
 	}
+	
+//	使用者追加
+	@Test
+	public void addUserTest() {
+		
+		User user = new User();
+		
+		user.setUserAccount("AA0000002");
+		user.setUserPassword("AA0000002");
+		user.setUserName("使用者AA2");
+		
+		userService.addUser(user);
+		System.out.println("完成");
+	}
+	
 
 }

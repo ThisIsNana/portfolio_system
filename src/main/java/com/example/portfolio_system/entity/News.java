@@ -35,6 +35,9 @@ public class News {
 
 	@Column(name = "news_reading_count")
 	private int newsReadingCount;
+
+	@Column(name = "news_active")
+	private boolean newsIsActive;
 	
 //	=========================================
 
@@ -42,18 +45,20 @@ public class News {
 		super();
 	}
 
-	public News(int newsId, String newsTitle, LocalDate newsCreateDate, 
-			LocalDate newsUpdateDate, String newsCategory,
-			String newsDescription, int newsReadingCount) {
-	super();
-	this.newsId = newsId;
-	this.newsTitle = newsTitle;
-	this.newsCreateDate = newsCreateDate;
-	this.newsUpdateDate = newsUpdateDate;
-	this.newsCategory = newsCategory;
-	this.newsDescription = newsDescription;
-	this.newsReadingCount = newsReadingCount;
-}
+
+	public News(int newsId, String newsTitle, LocalDate newsCreateDate, LocalDate newsUpdateDate, String newsCategory,
+			String newsDescription, int newsReadingCount, boolean newsIsActive) {
+		super();
+		this.newsId = newsId;
+		this.newsTitle = newsTitle;
+		this.newsCreateDate = newsCreateDate;
+		this.newsUpdateDate = newsUpdateDate;
+		this.newsCategory = newsCategory;
+		this.newsDescription = newsDescription;
+		this.newsReadingCount = newsReadingCount;
+		this.newsIsActive = newsIsActive;
+	}
+
 
 //	=========================================
 
@@ -112,6 +117,14 @@ public class News {
 
 	public void setNewsReadingCount(int newsReadingCount) {
 		this.newsReadingCount = newsReadingCount;
+	}
+
+	public boolean isNewsIsActive() {
+		return newsIsActive;
+	}
+
+	public void setNewsIsActive(boolean newsIsActive) {
+		this.newsIsActive = newsIsActive;
 	}
 	
 	
