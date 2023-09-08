@@ -11,5 +11,7 @@ CREATE TABLE IF NOT EXISTS `portfolio_system`.`news` (
   `news_category` VARCHAR(200) NOT NULL,
   `news_description` VARCHAR(2000) NOT NULL,
   `news_reading_count` INT NOT NULL DEFAULT 0,
-  `news_active1` TINYINT NOT NULL DEFAULT 1 
-  PRIMARY KEY (`news_id`));
+  `news_active1` TINYINT NOT NULL DEFAULT 1,
+  PRIMARY KEY (`news_id`)
+);
+
