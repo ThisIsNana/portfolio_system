@@ -32,7 +32,7 @@ public class NewsServiceImpl implements NewsService {
 		if (!StringUtils.hasText(newsTitle) || !StringUtils.hasText(newsDescription)
 				|| !StringUtils.hasText(newsCategory)) {
 
-			System.out.println("title/description/category is empty");
+			System.out.println("タイトル・内容・カテゴリーが空いています！");
 			return new NewsResponse(RtnCode.CANNOT_EMPTY.getMessage());
 
 		}

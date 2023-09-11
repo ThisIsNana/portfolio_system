@@ -52,7 +52,7 @@ public class NewsController {
 	}
 	
 	
-//	 更新
+//	更新
 	@PostMapping(value = "update_news")
 	public NewsResponse updateNews(@RequestBody UpdateNewsRequest request) {
 		return newsService.updateNews(request.getNewsId(),request.getNewsTitle(),request.getNewsCategory(),request.getNewsDescription(),request.getNewsUpdateDate());

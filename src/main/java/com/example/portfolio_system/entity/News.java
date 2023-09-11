@@ -42,7 +42,7 @@ public class News {
 //	=========================================
 
 	public News() {
-		super();
+		super(); 
 	}
 
 
