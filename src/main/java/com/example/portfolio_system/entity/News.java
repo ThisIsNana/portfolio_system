@@ -27,6 +27,9 @@ public class News {
 	@Column(name = "news_update_date")
 	private LocalDate newsUpdateDate;
 
+	@Column(name = "news_update_name")
+	private LocalDate newsUpdateName;
+
 	@Column(name = "news_category")
 	private String newsCategory;
 
@@ -38,33 +41,40 @@ public class News {
 
 	@Column(name = "news_active")
 	private boolean newsIsActive;
-	
+
 //	=========================================
 
 	public News() {
-		super(); 
+		super();
 	}
 
-
-	public News(int newsId, String newsTitle, LocalDate newsCreateDate, LocalDate newsUpdateDate, String newsCategory,
-			String newsDescription, int newsReadingCount, boolean newsIsActive) {
+	public News(int newsId, String newsTitle, LocalDate newsCreateDate, LocalDate newsUpdateDate,
+			LocalDate newsUpdateName, String newsCategory, String newsDescription, int newsReadingCount,
+			boolean newsIsActive) {
 		super();
 		this.newsId = newsId;
 		this.newsTitle = newsTitle;
 		this.newsCreateDate = newsCreateDate;
 		this.newsUpdateDate = newsUpdateDate;
+		this.newsUpdateName = newsUpdateName;
 		this.newsCategory = newsCategory;
 		this.newsDescription = newsDescription;
 		this.newsReadingCount = newsReadingCount;
 		this.newsIsActive = newsIsActive;
 	}
 
-
 //	=========================================
-
 
 	public int getNewsId() {
 		return newsId;
+	}
+
+	public LocalDate getNewsUpdateName() {
+		return newsUpdateName;
+	}
+
+	public void setNewsUpdateName(LocalDate newsUpdateName) {
+		this.newsUpdateName = newsUpdateName;
 	}
 
 	public void setNewsId(int newsId) {
@@ -126,6 +136,5 @@ public class News {
 	public void setNewsIsActive(boolean newsIsActive) {
 		this.newsIsActive = newsIsActive;
 	}
-	
-	
+
 }

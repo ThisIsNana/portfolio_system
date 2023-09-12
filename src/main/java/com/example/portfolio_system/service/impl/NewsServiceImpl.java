@@ -77,7 +77,7 @@ public class NewsServiceImpl implements NewsService {
 		List<News> result = new ArrayList<>();
 
 		if (StringUtils.hasText(title) || StringUtils.hasText(category) || startDate != null || endDate != null) {
-//			有任何一個值，就使用Query語法進行搜尋
+//			有任何一個值，就進行搜尋
 			result = newsDao.searchNews(title, category, startDate, endDate);
 
 		} else {
@@ -169,7 +169,7 @@ public class NewsServiceImpl implements NewsService {
 
 	
 
-//	變更顯示狀態(目前功能為刪除)
+//	不表示
 	@Override
 	public NewsResponse inactiveNews(int newsId, boolean isActive) {
 
